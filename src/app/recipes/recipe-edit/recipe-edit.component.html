@@ -1,114 +1,171 @@
-<div class="row">
-  <div class="col-xs-12">
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-      <div class="row" style="margin-top: 1rem">
-        <div class="col-xs-12">
-          <button
-            type="submit"
-            class="btn btn-success"
-            [disabled]="!recipeForm.valid"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger"
-            style="margin-left: 0.5rem"
-            (click)="onCancel()"
-          >
-            Cancel
-          </button>
-        </div>
+<div class="rb-card">
+  <div class="rb-card__header">
+    <h2 class="rb-card__title">
+      <svg
+        class="rb-nav-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+      </svg>
+      {{ editMode ? "Edit recipe" : "New recipe" }}
+    </h2>
+    <span class="rb-chip">{{ controls.length }} ingredients</span>
+  </div>
+
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="rb-card__body">
+      <div class="rb-form-actions">
+        <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">
+          {{ editMode ? "Save changes" : "Create recipe" }}
+        </button>
+        <button type="button" class="btn btn-default" (click)="onCancel()">
+          Cancel
+        </button>
+        <span class="rb-muted rb-nowrap" style="align-self: center">
+          * all fields are required
+        </span>
       </div>
-      <br />
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              class="form-control"
-              formControlName="name"
-              #name
-            />
-          </div>
-        </div>
+
+      <div class="form-group">
+        <label for="name">Recipe name *</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          placeholder="e.g. Creamy tomato pasta"
+          formControlName="name"
+        />
+        <p class="rb-field-error" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+          A recipe name is required.
+        </p>
       </div>
+
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 col-sm-7">
           <div class="form-group">
-            <label for="imagePath">Image URL</label>
+            <label for="imagePath">Image URL *</label>
             <input
               type="text"
               id="imagePath"
               class="form-control"
+              placeholder="https://&hellip;/my-dish.jpg"
               formControlName="imagePath"
               #imagePath
             />
+            <p
+              class="rb-field-error"
+              *ngIf="imagePathCtrl.invalid && imagePathCtrl.touched"
+            >
+              An image URL is required.
+            </p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-5">
+          <label>Preview</label>
+          <div class="rb-preview">
+            <img
+              *ngIf="imagePath.value"
+              [src]="imagePath.value"
+              alt="Recipe preview"
+            />
+            <span *ngIf="!imagePath.value">Image preview</span>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <img [src]="imagePath.value" class="img-responsive" />
-        </div>
+
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea
+          id="description"
+          class="form-control"
+          rows="5"
+          placeholder="How does this dish taste? What makes it special?"
+          formControlName="description"
+        ></textarea>
+        <p
+          class="rb-field-error"
+          *ngIf="descriptionCtrl.invalid && descriptionCtrl.touched"
+        >
+          A short description is required.
+        </p>
       </div>
-      <br />
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea
-              type="text"
-              id="description"
-              class="form-control"
-              rows="6"
-              formControlName="description"
-            ></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12" formArrayName="ingredients">
-          <div
-            class="row"
-            *ngFor="let ingredientCtrl of controls; let i = index"
-            [formGroupName]="i"
-            style="margin-top: 1rem"
+
+      <hr />
+
+      <h3>Ingredients</h3>
+      <p class="rb-field-note">
+        Add one row per ingredient. Amount must be a whole number greater than
+        zero.
+      </p>
+
+      <div formArrayName="ingredients" class="rb-mt-3">
+        <div
+          class="rb-ingredient-row"
+          *ngFor="let ingredientCtrl of controls; let i = index"
+          [formGroupName]="i"
+        >
+          <span class="rb-ingredient-row__index">{{ i + 1 }}</span>
+          <input
+            type="text"
+            class="form-control rb-ingredient-row__name"
+            formControlName="name"
+            placeholder="Ingredient name"
+          />
+          <input
+            type="number"
+            class="form-control rb-ingredient-row__amount"
+            formControlName="amount"
+            placeholder="Amount"
+            min="1"
+          />
+          <button
+            type="button"
+            class="btn btn-default rb-icon-btn"
+            (click)="onDeleteIngredient(i)"
+            aria-label="Remove ingredient"
+            title="Remove ingredient"
           >
-            <div class="col-xs-8">
-              <input type="text" class="form-control" formControlName="name" />
-            </div>
-
-            <div class="col-xs-2">
-              <input
-                type="number"
-                class="form-control"
-                formControlName="amount"
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="3 6 5 6 21 6" />
+              <path
+                d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
               />
-            </div>
-
-            <div class="col-xs-2">
-              <button type="button" class="btn btn-danger" (click)="onDeleteIngredient(i)">
-                X
-              </button>
-            </div>
-          </div>
-          <hr />
-          <div class="row">
-            <div class="col-xs-12">
-              <button
-                type="button"
-                class="btn btn-success"
-                (click)="onAddIngredient()"
-              >
-                Add Ingredient
-              </button>
-            </div>
-          </div>
+            </svg>
+          </button>
+          <p
+            class="rb-field-error"
+            *ngIf="ingredientCtrl.invalid && ingredientCtrl.touched"
+          >
+            Enter a name and a positive amount.
+          </p>
         </div>
+
+        <div class="rb-empty rb-mb-0" *ngIf="!controls.length">
+          <span class="rb-empty__icon" aria-hidden="true">&#129380;</span>
+          <p class="rb-empty__title">No ingredients yet</p>
+          <p class="rb-empty__text">Add the first one below.</p>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary btn-block rb-mt-3"
+          (click)="onAddIngredient()"
+        >
+          + Add ingredient
+        </button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
+

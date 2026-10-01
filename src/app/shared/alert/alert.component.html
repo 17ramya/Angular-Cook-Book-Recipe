@@ -1,9 +1,33 @@
 <div class="backdrop" (click)="onClose()">
-  <div class="alert-box">
-    <p>{{ message }}</p>
-    <hr />
+  <div
+    class="alert-box"
+    role="alertdialog"
+    aria-modal="true"
+    (click)="$event.stopPropagation()"
+  >
+    <span class="alert-box__icon" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+        <line x1="12" y1="9" x2="12" y2="13" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+    </span>
+
+    <h3 class="alert-box__title">Something went wrong</h3>
+    <p class="alert-box__message">{{ message }}</p>
+
     <div class="alert-box-actions">
-      <button class="btn btn-primary" (click)="onClose()">Close</button>
+      <button class="btn btn-primary" type="button" (click)="onClose()">
+        Got it
+      </button>
     </div>
   </div>
 </div>
+

@@ -1,15 +1,46 @@
-<div class="row">
-  <div class="col-xs-12">
-    <button class="btn btn-success" (click)="onNewRecipe()">New Recipe</button>
+<div class="rb-card">
+  <div class="rb-card__header">
+    <h2 class="rb-card__title">
+      <svg
+        class="rb-nav-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path
+          d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+        />
+      </svg>
+      Recipe list
+      <span class="badge">{{ recipes ? recipes.length : 0 }}</span>
+    </h2>
+    <button class="btn btn-primary btn-sm" (click)="onNewRecipe()">
+      + New recipe
+    </button>
   </div>
-</div>
-<hr />
-<div class="row">
-  <div class="col-xs-12">
+
+  <div
+    class="rb-card__body rb-card__body--flush rb-recipe-list"
+    *ngIf="recipes && recipes.length; else emptyList"
+  >
     <app-recipe-item
       *ngFor="let recipeItem of recipes; let i = index"
       [recipe]="recipeItem"
       [index]="i"
     ></app-recipe-item>
   </div>
+
+  <ng-template #emptyList>
+    <div class="rb-empty">
+      <span class="rb-empty__icon" aria-hidden="true">&#127869;</span>
+      <p class="rb-empty__title">No recipes yet</p>
+      <p class="rb-empty__text">
+        Use <strong>New recipe</strong> to add your first dish.
+      </p>
+    </div>
+  </ng-template>
 </div>
+

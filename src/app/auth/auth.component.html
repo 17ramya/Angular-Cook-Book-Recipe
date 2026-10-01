@@ -1,33 +1,105 @@
 <ng-template appPlaceholder></ng-template>
-<div class="row">
-  <div class="col-xs-12 col-md-6 col-md-offset-3">
-    <!-- <div class="alert alert-danger" *ngIf="error">
-      <p>{{ error }}</p>
-    </div> -->
-    <app-alert
-      [message]="error"
-      *ngIf="error"
-      (close)="onHandleError()"
-    ></app-alert>
-    <div style="text-align: center" *ngIf="isLoading">
-      <app-loading-spinner></app-loading-spinner>
+
+<div class="rb-auth">
+  <aside class="rb-auth__aside">
+    <h2>Cook it. Save it. Shop it.</h2>
+    <p>
+      One place for the recipes you love, the ingredients they need and the
+      shopping list that gets them home.
+    </p>
+    <ul class="rb-auth__points">
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+        Create and edit your own recipes
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+        Push ingredients straight to the list
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+        Sync everything to the cloud
+      </li>
+    </ul>
+  </aside>
+
+  <section class="rb-auth__panel">
+    <div class="rb-auth__tabs" role="tablist">
+      <button
+        type="button"
+        class="rb-auth__tab"
+        [class.is-active]="isLoginMode"
+        (click)="onSetMode(true)"
+      >
+        Sign in
+      </button>
+      <button
+        type="button"
+        class="rb-auth__tab"
+        [class.is-active]="!isLoginMode"
+        (click)="onSetMode(false)"
+      >
+        Create account
+      </button>
     </div>
+
+    <h2 class="rb-auth__heading">
+      {{ isLoginMode ? "Welcome back" : "Join the kitchen" }}
+    </h2>
+    <p class="rb-auth__lead">
+      {{
+        isLoginMode
+          ? "Sign in to reach your recipes and shopping list."
+          : "Create an account with your email to get started."
+      }}
+    </p>
+
+    <div class="rb-inline-error" *ngIf="error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+      <p>{{ error }}</p>
+      <button type="button" (click)="onHandleError()" aria-label="Dismiss error">
+        &times;
+      </button>
+    </div>
+
+    <div class="rb-empty" *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+      <p class="rb-empty__text rb-mt-3">Signing you in&hellip;</p>
+    </div>
+
     <form
       #authForm="ngForm"
       (ngSubmit)="onSubmitForm(authForm)"
       *ngIf="!isLoading"
+      novalidate
     >
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email">Email address</label>
         <input
           type="email"
           id="email"
           class="form-control"
+          placeholder="you@example.com"
           ngModel
           name="email"
           required
           email
+          #emailField="ngModel"
+          autocomplete="email"
         />
+        <p class="rb-field-error" *ngIf="emailField.invalid && emailField.touched">
+          Please enter a valid email address.
+        </p>
       </div>
 
       <div class="form-group">
@@ -36,26 +108,42 @@
           type="password"
           id="password"
           class="form-control"
+          placeholder="At least 6 characters"
           ngModel
           name="password"
           required
           minlength="6"
+          #passwordField="ngModel"
+          autocomplete="current-password"
         />
+        <p
+          class="rb-field-error"
+          *ngIf="passwordField.invalid && passwordField.touched"
+        >
+          Password must be at least 6 characters.
+        </p>
       </div>
 
-      <div>
-        <button
-          class="btn btn-primary"
-          style="margin-right: 1rem"
-          type="submit"
-          [disabled]="!authForm.valid"
-        >
-          {{ isLoginMode ? "Login" : "Sign Up" }}
-        </button>
-        <button class="btn btn-primary" (click)="onSwitchMode()" type="button">
-          Switch to {{ isLoginMode ? "Signup" : "Login" }}
-        </button>
-      </div>
+      <button
+        class="btn btn-primary btn-lg btn-block"
+        type="submit"
+        [disabled]="!authForm.valid"
+      >
+        {{ isLoginMode ? "Sign in" : "Create account" }}
+      </button>
     </form>
-  </div>
+
+    <p class="rb-auth__foot">
+      {{ isLoginMode ? "New to Recipe Book?" : "Already have an account?" }}
+      <a
+        class="rb-click"
+        (click)="onSetMode(!isLoginMode)"
+        role="button"
+        tabindex="0"
+      >
+        {{ isLoginMode ? "Create an account" : "Sign in instead" }}
+      </a>
+    </p>
+  </section>
 </div>
+

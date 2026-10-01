@@ -1,8 +1,11 @@
 <app-header></app-header>
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+
+<main class="container rb-main">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="container rb-footer">
+  <strong>Recipe Book</strong> &middot; crafted with Angular {{ currentYear }} &mdash;
+  save recipes, plan ingredients, shop smarter.
+</footer>
+

@@ -1,1 +1,1472 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   Recipe Book — global design system
+   Layers: tokens -> base -> Bootstrap 3 overrides -> components -> utilities
+   ========================================================================== */
+
+/* 1. Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --brand-50: #fff7ed;
+  --brand-100: #ffedd5;
+  --brand-200: #fed7aa;
+  --brand-300: #fdba74;
+  --brand-400: #fb923c;
+  --brand-500: #f97316;
+  --brand-600: #ea580c;
+  --brand-700: #c2410c;
+  --brand-800: #9a3412;
+
+  --accent-500: #0d9488;
+  --accent-600: #0f766e;
+  --accent-50: #f0fdfa;
+
+  --danger-500: #e11d48;
+  --danger-600: #be123c;
+  --danger-50: #fff1f2;
+
+  --ink-900: #1e293b;
+  --ink-700: #334155;
+  --ink-500: #64748b;
+  --ink-400: #94a3b8;
+  --ink-200: #e2e8f0;
+  --ink-100: #f1f5f9;
+  --ink-50: #f8fafc;
+  --white: #fff;
+
+  --font-display: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  --sh-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.08);
+  --sh-2: 0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+  --sh-3: 0 12px 28px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(15, 23, 42, 0.06);
+  --sh-brand: 0 8px 20px rgba(234, 88, 12, 0.28);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 140ms var(--ease);
+  --t-base: 240ms var(--ease);
+
+  --header-h: 68px;
+  --container: 1180px;
+}
+
+/* 2. Base
+   -------------------------------------------------------------------------- */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-700);
+  background-color: var(--brand-50);
+  background-image: radial-gradient(
+      circle at 12% -10%,
+      rgba(249, 115, 22, 0.18),
+      transparent 45%
+    ),
+    radial-gradient(circle at 88% 0%, rgba(13, 148, 136, 0.14), transparent 42%),
+    linear-gradient(180deg, #fffdfb 0%, #fff7ed 38%, #f8fafc 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding-bottom: 72px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--font-display);
+  color: var(--ink-900);
+  letter-spacing: -0.01em;
+  margin-top: 0;
+}
+
+h1,
+.h1 {
+  font-weight: 700;
+}
+h2,
+.h2,
+h3,
+.h3 {
+  font-weight: 600;
+}
+
+a {
+  color: var(--brand-700);
+  transition: color var(--t-fast);
+}
+a:hover,
+a:focus {
+  color: var(--brand-600);
+  text-decoration: none;
+}
+
+hr {
+  border-top: 1px solid var(--ink-200);
+  margin: 18px 0;
+}
+
+::selection {
+  background: var(--brand-200);
+  color: var(--brand-800);
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand-300);
+  outline-offset: 2px;
+}
+
+/* 3. Bootstrap 3 overrides
+   -------------------------------------------------------------------------- */
+
+/* 3.1 Layout */
+.container {
+  max-width: var(--container);
+  width: 100%;
+}
+
+.container-fluid {
+  max-width: 1360px;
+}
+
+/* 3.2 Buttons */
+.btn {
+  font-family: var(--font-display);
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  padding: 9px 20px;
+  font-size: 14px;
+  line-height: 1.45;
+  transition: transform var(--t-fast), box-shadow var(--t-fast),
+    background-color var(--t-fast), color var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active,
+.btn.active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+  outline: none;
+}
+
+.btn[disabled],
+.btn[disabled]:hover,
+fieldset[disabled] .btn {
+  transform: none;
+  opacity: 0.55;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-lg {
+  padding: 13px 28px;
+  font-size: 16px;
+}
+
+.btn-sm {
+  padding: 6px 15px;
+  font-size: 13px;
+}
+
+.btn-xs {
+  padding: 3px 11px;
+  font-size: 12px;
+}
+
+.btn-primary {
+  background-color: var(--brand-600);
+  background-image: linear-gradient(
+    135deg,
+    var(--brand-500) 0%,
+    var(--brand-700) 100%
+  );
+  border-color: var(--brand-700);
+  color: var(--white);
+  box-shadow: var(--sh-brand);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background-color: var(--brand-700);
+  background-image: linear-gradient(
+    135deg,
+    var(--brand-600) 0%,
+    var(--brand-800) 100%
+  );
+  border-color: var(--brand-800);
+  color: var(--white);
+  box-shadow: 0 10px 24px rgba(194, 65, 12, 0.32);
+}
+
+.btn-success {
+  background-color: var(--accent-500);
+  background-image: linear-gradient(
+    135deg,
+    var(--accent-500) 0%,
+    var(--accent-600) 100%
+  );
+  border-color: var(--accent-600);
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.26);
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.open > .dropdown-toggle.btn-success {
+  background-color: var(--accent-600);
+  background-image: linear-gradient(135deg, var(--accent-600) 0%, #115e59 100%);
+  border-color: #115e59;
+  color: var(--white);
+}
+
+.btn-danger {
+  background-color: var(--danger-500);
+  background-image: linear-gradient(
+    135deg,
+    var(--danger-500) 0%,
+    var(--danger-600) 100%
+  );
+  border-color: var(--danger-600);
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.24);
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+  background-color: var(--danger-600);
+  background-image: linear-gradient(135deg, var(--danger-600) 0%, #9f1239 100%);
+  border-color: #9f1239;
+  color: var(--white);
+}
+
+.btn-default {
+  background-color: var(--white);
+  background-image: none;
+  border-color: var(--ink-200);
+  color: var(--ink-700);
+  box-shadow: var(--sh-1);
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active {
+  background-color: var(--ink-50);
+  border-color: var(--ink-400);
+  color: var(--ink-900);
+}
+
+.btn-link {
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.btn-group > .btn {
+  border-radius: var(--r-pill);
+}
+
+.btn-group > .btn + .btn {
+  margin-left: 8px;
+}
+
+/* 3.3 Forms */
+.form-control {
+  height: 46px;
+  padding: 11px 15px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background-color: var(--white);
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-sm);
+  box-shadow: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 128px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-control:focus {
+  border-color: var(--brand-400);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.16);
+}
+
+.form-control::placeholder {
+  color: var(--ink-400);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label,
+.control-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink-700);
+  margin-bottom: 7px;
+}
+
+.form-control[disabled],
+.form-control[readonly] {
+  background-color: var(--ink-100);
+  color: var(--ink-500);
+}
+
+/* validation states — global, so every form benefits */
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border-color: var(--danger-500);
+  box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1);
+}
+
+input.ng-valid.ng-touched,
+textarea.ng-valid.ng-touched {
+  border-color: var(--accent-500);
+}
+
+/* 3.4 Navbar */
+.navbar {
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  min-height: var(--header-h);
+}
+
+.navbar-default {
+  background-color: #1b2436;
+  background-image: linear-gradient(
+    100deg,
+    #16202f 0%,
+    #23304a 55%,
+    #3b2a44 100%
+  );
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.28);
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-text {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.navbar-default .navbar-nav > li > a {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--r-pill);
+  margin: 14px 4px;
+  padding: 9px 16px;
+  transition: background-color var(--t-fast), color var(--t-fast);
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: var(--brand-600);
+  background-image: linear-gradient(135deg, var(--brand-500), var(--brand-700));
+  color: var(--white);
+  box-shadow: var(--sh-brand);
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: var(--white);
+}
+
+.navbar-default .navbar-toggle {
+  border-color: rgba(255, 255, 255, 0.35);
+  border-radius: var(--r-xs);
+  margin-top: 16px;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: var(--white);
+}
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: 0;
+}
+
+/* 3.5 Dropdowns */
+.dropdown-menu {
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-3);
+  padding: 8px;
+  margin-top: 10px;
+  min-width: 215px;
+  animation: rbPop var(--t-base) both;
+}
+
+.dropdown-menu > li > a {
+  border-radius: var(--r-xs);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-700);
+  transition: background-color var(--t-fast), color var(--t-fast);
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  background-color: var(--brand-50);
+  color: var(--brand-700);
+}
+
+.dropdown-menu .divider {
+  background-color: var(--ink-200);
+  margin: 6px 4px;
+}
+
+/* 3.6 List groups */
+.list-group-item {
+  border: 1px solid var(--ink-200);
+  margin-bottom: 10px;
+  border-radius: var(--r-md);
+  padding: 0;
+  transition: box-shadow var(--t-fast), transform var(--t-fast),
+    border-color var(--t-fast);
+}
+
+/* 3.7 Panels */
+.panel {
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-1);
+}
+
+.panel-default > .panel-heading {
+  background-color: var(--white);
+  border-color: var(--ink-200);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+/* 3.8 Alerts, badges, labels */
+.alert {
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  font-size: 14px;
+}
+
+.alert-danger {
+  background-color: var(--danger-50);
+  border-color: #fecdd3;
+  color: #9f1239;
+}
+
+.badge {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: var(--r-pill);
+  padding: 4px 11px;
+  background-color: var(--brand-100);
+  color: var(--brand-800);
+}
+
+.label {
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-weight: 600;
+  padding: 0.35em 0.9em;
+}
+
+/* 3.9 Caret */
+.caret {
+  margin-left: 5px;
+}
+
+/* 4. App components
+   -------------------------------------------------------------------------- */
+
+/* 4.1 Page scaffold */
+.rb-main {
+  padding: 34px 0 10px;
+}
+
+.rb-page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.rb-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-700);
+  background: var(--brand-100);
+  border-radius: var(--r-pill);
+  padding: 6px 14px;
+  margin-bottom: 12px;
+}
+
+.rb-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: var(--ink-900);
+}
+
+.rb-subtitle {
+  margin: 0;
+  color: var(--ink-500);
+  font-size: 15px;
+}
+
+/* 4.2 Card */
+.rb-card {
+  background: var(--white);
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-2);
+  overflow: hidden;
+  animation: rbRise var(--t-base) both;
+}
+
+.rb-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, var(--white), var(--ink-50));
+  border-bottom: 1px solid var(--ink-200);
+}
+
+.rb-card__header h2,
+.rb-card__header h3,
+.rb-card__header .rb-card__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rb-card__body {
+  padding: 20px;
+}
+
+.rb-card__body--flush {
+  padding: 14px;
+}
+
+.rb-card + .rb-card {
+  margin-top: 20px;
+}
+
+.rb-card__hint {
+  color: var(--ink-500);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* 4.3 Recipe list item */
+.rb-recipe-list {
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
+  padding: 6px;
+  scrollbar-width: thin;
+}
+
+.rb-recipe-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-md);
+  background: var(--white);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--t-fast), box-shadow var(--t-fast),
+    border-color var(--t-fast), background-color var(--t-fast);
+}
+
+.rb-recipe-item + .rb-recipe-item {
+  margin-top: 10px;
+}
+
+.rb-recipe-item:hover,
+.rb-recipe-item:focus {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-2);
+  border-color: var(--brand-300);
+  color: inherit;
+  text-decoration: none;
+  background: var(--brand-50);
+}
+
+.rb-recipe-item.is-active {
+  border-color: var(--brand-500);
+  background: linear-gradient(180deg, var(--brand-50), var(--white));
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.16);
+}
+
+.rb-recipe-item__thumb {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-sm);
+  object-fit: cover;
+  background: var(--ink-100);
+  box-shadow: var(--sh-1);
+}
+
+.rb-recipe-item__body {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.rb-recipe-item__name {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rb-recipe-item__desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-500);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rb-recipe-item__chev {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: var(--ink-400);
+}
+
+/* 4.4 Recipe detail hero */
+.rb-hero {
+  position: relative;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--ink-100);
+  box-shadow: var(--sh-1);
+  margin-bottom: 18px;
+}
+
+.rb-hero img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.rb-hero__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 40px 22px 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0) 0%,
+    rgba(15, 23, 42, 0.82) 100%
+  );
+  color: var(--white);
+}
+
+.rb-hero__overlay h1 {
+  color: var(--white);
+  font-size: 26px;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.rb-hero--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  color: var(--ink-400);
+  font-size: 42px;
+}
+
+/* 4.5 Chips + amount badges */
+.rb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 18px;
+}
+
+.rb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-700);
+  background: var(--ink-100);
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-pill);
+  padding: 6px 13px;
+}
+
+.rb-chip--accent {
+  color: var(--accent-600);
+  background: var(--accent-50);
+  border-color: #99f6e4;
+}
+
+.rb-amount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 62px;
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent-600);
+  background: var(--accent-50);
+  border: 1px solid #99f6e4;
+  border-radius: var(--r-pill);
+  padding: 5px 13px;
+  white-space: nowrap;
+}
+
+/* 4.6 Ingredient / list rows */
+.rb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--white);
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-sm);
+  transition: transform var(--t-fast), box-shadow var(--t-fast),
+    border-color var(--t-fast), background-color var(--t-fast);
+}
+
+.rb-row + .rb-row {
+  margin-top: 9px;
+}
+
+.rb-row:hover {
+  border-color: var(--brand-300);
+  box-shadow: var(--sh-1);
+  transform: translateX(2px);
+}
+
+.rb-row__name {
+  font-weight: 500;
+  color: var(--ink-900);
+}
+
+/* 4.7 Empty state */
+.rb-empty {
+  text-align: center;
+  padding: 34px 18px;
+  color: var(--ink-500);
+}
+
+.rb-empty__icon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 10px;
+  display: block;
+  opacity: 0.85;
+}
+
+.rb-empty__title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-700);
+  margin: 0 0 4px;
+}
+
+.rb-empty__text {
+  margin: 0;
+  font-size: 13.5px;
+}
+
+/* 4.8 Header — brand, nav icons, user */
+.rb-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.rb-brand {
+  display: flex !important;
+  align-items: center;
+  gap: 11px;
+  height: var(--header-h);
+  padding: 0 16px 0 0 !important;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em;
+  color: var(--white) !important;
+}
+
+.rb-brand:hover,
+.rb-brand:focus {
+  color: var(--white) !important;
+}
+
+.rb-brand__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background-image: linear-gradient(135deg, var(--brand-400), var(--brand-700));
+  box-shadow: var(--sh-brand);
+  color: var(--white);
+  flex: 0 0 auto;
+}
+
+.rb-brand__mark svg {
+  width: 21px;
+  height: 21px;
+}
+
+.rb-brand__text b {
+  font-weight: 700;
+  color: var(--brand-300);
+}
+
+.rb-nav-icon {
+  width: 17px;
+  height: 17px;
+  margin-right: 7px;
+  vertical-align: -2px;
+  stroke-width: 2;
+}
+
+.rb-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  height: var(--header-h);
+}
+
+.rb-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-image: linear-gradient(
+    135deg,
+    var(--accent-500),
+    var(--accent-600)
+  );
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  flex: 0 0 auto;
+}
+
+.rb-user__email {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rb-logout {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.rb-logout:hover {
+  color: #ffb4b4 !important;
+}
+
+/* 4.9 Footer */
+.rb-footer {
+  margin-top: 46px;
+  padding: 22px 0;
+  border-top: 1px solid var(--ink-200);
+  color: var(--ink-500);
+  font-size: 13px;
+  text-align: center;
+}
+
+.rb-footer strong {
+  color: var(--ink-700);
+  font-family: var(--font-display);
+}
+
+/* 4.10 Auth screen */
+.rb-auth {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  background: var(--white);
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-3);
+  overflow: hidden;
+  max-width: 940px;
+  margin: 12px auto 0;
+  animation: rbRise var(--t-base) both;
+}
+
+.rb-auth__aside {
+  padding: 40px 34px;
+  color: var(--white);
+  background-image: linear-gradient(
+      150deg,
+      rgba(154, 52, 18, 0.9),
+      rgba(194, 65, 12, 0.85)
+    ),
+    radial-gradient(circle at 85% 15%, rgba(13, 148, 136, 0.55), transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rb-auth__aside h2 {
+  color: var(--white);
+  font-size: 26px;
+  margin: 0 0 10px;
+}
+
+.rb-auth__aside p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14.5px;
+  margin-bottom: 22px;
+}
+
+.rb-auth__points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rb-auth__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 12px;
+}
+
+.rb-auth__points svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.rb-auth__panel {
+  padding: 34px 32px;
+}
+
+.rb-auth__tabs {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  background: var(--ink-100);
+  border-radius: var(--r-pill);
+  margin-bottom: 22px;
+}
+
+.rb-auth__tab {
+  border: 0;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-500);
+  border-radius: var(--r-pill);
+  padding: 8px 18px;
+  transition: background-color var(--t-fast), color var(--t-fast),
+    box-shadow var(--t-fast);
+}
+
+.rb-auth__tab.is-active {
+  background: var(--white);
+  color: var(--brand-700);
+  box-shadow: var(--sh-1);
+}
+
+.rb-field-error {
+  color: var(--danger-600);
+  font-size: 12.5px;
+  margin: 6px 0 0;
+}
+
+.rb-auth__foot {
+  margin: 18px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-500);
+  text-align: center;
+}
+
+.rb-auth__foot a {
+  font-weight: 600;
+}
+
+/* 5. Animations
+   -------------------------------------------------------------------------- */
+@keyframes rbRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rbPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* 6. Scrollbars
+   -------------------------------------------------------------------------- */
+.rb-recipe-list::-webkit-scrollbar {
+  width: 9px;
+}
+
+.rb-recipe-list::-webkit-scrollbar-track {
+  background: var(--ink-100);
+  border-radius: var(--r-pill);
+}
+
+.rb-recipe-list::-webkit-scrollbar-thumb {
+  background: var(--ink-400);
+  border-radius: var(--r-pill);
+}
+
+.rb-recipe-list::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-500);
+}
+
+/* 7. Utilities
+   -------------------------------------------------------------------------- */
+.rb-muted {
+  color: var(--ink-500);
+}
+
+.rb-mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.rb-mt-3 {
+  margin-top: 16px;
+}
+
+.rb-text-right {
+  text-align: right;
+}
+
+.rb-nowrap {
+  white-space: nowrap;
+}
+
+.rb-click {
+  cursor: pointer;
+}
+
+.rb-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* 8. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 991px) {
+  .rb-title {
+    font-size: 26px;
+  }
+
+  .rb-recipe-list {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .rb-hero img {
+    height: 210px;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 40px;
+  }
+
+  .rb-main {
+    padding-top: 22px;
+  }
+
+  .navbar-default .navbar-nav > li > a {
+    margin: 4px 0;
+  }
+
+  .rb-user {
+    height: auto;
+    padding: 10px 15px;
+  }
+
+  .rb-brand {
+    height: 60px;
+  }
+
+  .rb-recipe-item__thumb {
+    width: 58px;
+    height: 58px;
+  }
+
+  .rb-recipe-item__desc {
+    -webkit-line-clamp: 1;
+  }
+
+  .rb-hero__overlay h1 {
+    font-size: 21px;
+  }
+
+  .rb-auth__panel {
+    padding: 26px 20px;
+  }
+
+  .rb-page-head {
+    margin-bottom: 16px;
+  }
+}
+
+/* 9. Auth extras
+   -------------------------------------------------------------------------- */
+.rb-auth__heading {
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+
+.rb-auth__lead {
+  color: var(--ink-500);
+  font-size: 14px;
+  margin: 0 0 22px;
+}
+
+.rb-inline-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--danger-50);
+  border: 1px solid #fecdd3;
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  color: #9f1239;
+  font-size: 13.5px;
+  animation: rbRise var(--t-fast) both;
+}
+
+.rb-inline-error svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.rb-inline-error p {
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.rb-inline-error button {
+  border: 0;
+  background: transparent;
+  color: #9f1239;
+  font-size: 19px;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--t-fast);
+}
+
+.rb-inline-error button:hover {
+  opacity: 1;
+}
+
+@media (max-width: 860px) {
+  .rb-auth {
+    grid-template-columns: 1fr;
+  }
+
+  .rb-auth__aside {
+    display: none;
+  }
+}
+
+/* 10. Recipe form
+   -------------------------------------------------------------------------- */
+.rb-form-actions {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: -20px -20px 22px;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--ink-200);
+}
+
+.rb-preview {
+  height: 150px;
+  border: 1px dashed var(--ink-400);
+  border-radius: var(--r-sm);
+  background: var(--ink-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--ink-400);
+  font-size: 13px;
+}
+
+.rb-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rb-field-note {
+  font-size: 12.5px;
+  color: var(--ink-400);
+  margin: 6px 0 0;
+}
+
+.rb-ingredient-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 116px 44px;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-sm);
+  background: var(--white);
+  margin-bottom: 10px;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.rb-ingredient-row:focus-within {
+  border-color: var(--brand-300);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+}
+
+.rb-ingredient-row__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--brand-100);
+  color: var(--brand-800);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rb-ingredient-row .rb-field-error {
+  grid-column: 2 / -1;
+  margin: 0;
+}
+
+.rb-icon-btn {
+  padding: 9px 12px;
+  line-height: 1;
+}
+
+.rb-icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 575px) {
+  .rb-ingredient-row {
+    grid-template-columns: 28px minmax(0, 1fr) 44px;
+  }
+
+  .rb-ingredient-row .rb-ingredient-row__name {
+    grid-column: 2 / -1;
+  }
+
+  .rb-ingredient-row .rb-ingredient-row__amount {
+    grid-column: 2 / 3;
+  }
+
+  .rb-ingredient-row .rb-field-error {
+    grid-column: 2 / -1;
+  }
+}
+
+/* 11. Shopping list + misc
+   -------------------------------------------------------------------------- */
+.rb-row--button {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.rb-row__action {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink-400);
+  opacity: 0.6;
+  transition: opacity var(--t-fast), color var(--t-fast);
+}
+
+.rb-row__action svg {
+  width: 15px;
+  height: 15px;
+}
+
+.rb-row:hover .rb-row__action {
+  opacity: 1;
+  color: var(--brand-600);
+}
+
+.rb-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rb-edit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--brand-700);
+  background: var(--brand-100);
+  border-radius: var(--r-pill);
+  padding: 5px 12px;
+  margin-bottom: 16px;
+}
+
+
+
+
+
+
+
+
+
+

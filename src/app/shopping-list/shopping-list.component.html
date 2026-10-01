@@ -1,16 +1,107 @@
-<div class="row">
-  <div class="col-xs-10">
-    <app-shopping-edit></app-shopping-edit>
-    <hr />
-    <ul class="list-group">
-      <a
-        class="list-group-item"
-        style="cursor: pointer"
-        *ngFor="let ingredient of ingredients; let i = index"
-        (click)="onEditItem(i)"
-      >
-        {{ ingredient.name }} - ${{ ingredient.amount }}
-      </a>
-    </ul>
+<div class="rb-page-head">
+  <div>
+    <span class="rb-eyebrow">Pantry planner</span>
+    <h1 class="rb-title">Shopping list</h1>
+    <p class="rb-subtitle">
+      Add what you need, then tap any row to edit or delete it.
+    </p>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-5">
+    <div class="rb-card">
+      <div class="rb-card__header">
+        <h2 class="rb-card__title">
+          <svg
+            class="rb-nav-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="16" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+          </svg>
+          Add ingredient
+        </h2>
+      </div>
+      <div class="rb-card__body">
+        <app-shopping-edit></app-shopping-edit>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-7">
+    <div class="rb-card">
+      <div class="rb-card__header">
+        <h2 class="rb-card__title">
+          <svg
+            class="rb-nav-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path
+              d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"
+            />
+          </svg>
+          Your list
+          <span class="badge">{{ ingredients ? ingredients.length : 0 }}</span>
+        </h2>
+        <button
+          class="btn btn-default btn-sm"
+          type="button"
+          (click)="onClearAll()"
+          *ngIf="ingredients && ingredients.length"
+        >
+          Clear all
+        </button>
+      </div>
+
+      <div
+        class="rb-card__body"
+        *ngIf="ingredients && ingredients.length; else emptyList"
+      >
+        <button
+          type="button"
+          class="rb-row rb-row--button"
+          *ngFor="let ingredient of ingredients; let i = index"
+          (click)="onEditItem(i)"
+        >
+          <span class="rb-row__name">{{ ingredient.name }}</span>
+          <span class="rb-amount">{{ ingredient.amount }}</span>
+          <span class="rb-row__action" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <ng-template #emptyList>
+        <div class="rb-empty">
+          <span class="rb-empty__icon" aria-hidden="true">&#128722;</span>
+          <p class="rb-empty__title">Your list is empty</p>
+          <p class="rb-empty__text">
+            Add an ingredient on the left, or send one over from a recipe.
+          </p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+

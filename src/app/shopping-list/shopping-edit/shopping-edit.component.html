@@ -1,57 +1,65 @@
 <!-- Template Driven Approach (TD) -->
-<div class="row">
-  <div class="col-xs-12">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <div class="row">
-        <div class="col-sm-5 form-group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            class="form-control"
-            name="name"
-            ngModel
-            required
-          />
-        </div>
-        <div class="col-sm-2 form-group">
-          <label for="amount">Amount</label>
-          <input
-            type="number"
-            id="amount"
-            class="form-control"
-            name="amount"
-            ngModel
-            required
-            pattern="^[1-9]+[0-9]*$"
-            step="5"
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <button class="btn btn-success" type="submit" [disabled]="!f.valid">
-            {{ editMode ? "Update" : "Add" }}
-          </button>
-          <button
-            class="btn btn-danger"
-            style="margin-left: 0.5rem"
-            type="button"
-            (click)="onDelete()"
-            *ngIf="editMode"
-          >
-            Delete
-          </button>
-          <button
-            class="btn btn-primary"
-            style="margin-left: 0.5rem"
-            type="button"
-            (click)="onClear()"
-          >
-            Clear
-          </button>
-        </div>
-      </div>
-    </form>
+<span class="rb-edit-badge" *ngIf="editMode">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    style="width: 14px; height: 14px"
+    aria-hidden="true"
+  >
+    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+  </svg>
+  Editing an existing item
+</span>
+
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
+  <div class="form-group">
+    <label for="name">Ingredient</label>
+    <input
+      type="text"
+      id="name"
+      class="form-control"
+      placeholder="e.g. Olive oil"
+      name="name"
+      ngModel
+      required
+    />
   </div>
-</div>
+
+  <div class="form-group">
+    <label for="amount">Amount</label>
+    <input
+      type="number"
+      id="amount"
+      class="form-control"
+      placeholder="1"
+      name="amount"
+      ngModel
+      required
+      pattern="^[1-9]+[0-9]*$"
+      min="1"
+      step="1"
+    />
+  </div>
+
+  <div class="rb-btn-row">
+    <button class="btn btn-success" type="submit" [disabled]="!f.valid">
+      {{ editMode ? "Update item" : "Add item" }}
+    </button>
+    <button
+      class="btn btn-danger"
+      type="button"
+      (click)="onDelete()"
+      *ngIf="editMode"
+    >
+      Delete
+    </button>
+    <button class="btn btn-default" type="button" (click)="onClear()">
+      Clear
+    </button>
+  </div>
+</form>
+

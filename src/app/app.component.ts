@@ -8,6 +8,8 @@ import { LoggingService } from './logging.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  currentYear = new Date().getFullYear();
+
   constructor(
     private authService: AuthService,
     private loggingService: LoggingService

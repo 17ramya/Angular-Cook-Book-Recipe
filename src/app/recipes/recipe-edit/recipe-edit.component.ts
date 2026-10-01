@@ -23,7 +23,6 @@ export class RecipeEditComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = Number(params['id']);
       this.editMode = params['id'] != null;
-      console.log(this.editMode);
       this.initForm();
     });
   }
@@ -102,5 +101,17 @@ export class RecipeEditComponent implements OnInit {
 
   get controls() {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
+  }
+
+  get nameCtrl() {
+    return this.recipeForm.get('name') as FormControl;
+  }
+
+  get imagePathCtrl() {
+    return this.recipeForm.get('imagePath') as FormControl;
+  }
+
+  get descriptionCtrl() {
+    return this.recipeForm.get('description') as FormControl;
   }
 }

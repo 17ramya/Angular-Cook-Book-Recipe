@@ -1,23 +1,28 @@
-<div class="list-group-item">
-  <a
-    style="cursor: pointer"
-    [routerLink]="[index]"
-    routerLinkActive="active"
-    class="class-group-item clearfix"
+<a
+  class="rb-recipe-item"
+  [routerLink]="[index]"
+  routerLinkActive="is-active"
+>
+  <img
+    [src]="recipe.imagePath"
+    [alt]="recipe.name"
+    class="rb-recipe-item__thumb"
+  />
+  <div class="rb-recipe-item__body">
+    <h4 class="rb-recipe-item__name">{{ recipe.name }}</h4>
+    <p class="rb-recipe-item__desc">{{ recipe.description }}</p>
+  </div>
+  <svg
+    class="rb-recipe-item__chev"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
   >
-    <div class="pull-left">
-      <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-      <p class="list-group-item-text">{{ recipe.description }}</p>
-    </div>
-    <span class="pull-right">
-      <img
-        [src]="recipe.imagePath"
-        alt="{{ recipe.name }}"
-        class="img-responsive"
-        style="max-height: 50px"
-      />
-    </span>
-  </a>
-</div>
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+</a>
 
-<!-- <div class="list-group-item" style="cursor: pointer"></div> -->

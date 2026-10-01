@@ -1,51 +1,70 @@
-<div class="row">
-  <div class="col-xs-12">
-    <img
-      [src]="recipe.imagePath"
-      alt="{{ recipe.name }}"
-      class="img-responsive"
-      style="max-height: 300px"
-    />
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <h1>{{ recipe.name }}</h1>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="btn-group" appDropdown>
-      <button type="button" class="btn btn-primary dropdown-toggle">
-        Manage Recipe <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <a (click)="onAddShoppingList()" style="cursor: pointer"
-            >To Shopping List</a
-          >
-        </li>
-        <li>
-          <a (click)="onEditRecipe()" style="cursor: pointer">Edit Recipe</a>
-        </li>
-        <li>
-          <a (click)="onDeleteRecipe()" style="cursor: pointer"
-            >Delete Recipe</a
-          >
-        </li>
-      </ul>
+<div class="rb-card" *ngIf="recipe; else noRecipe">
+  <div class="rb-card__body">
+    <div class="rb-hero">
+      <img [src]="recipe.imagePath" [alt]="recipe.name" />
+      <div class="rb-hero__overlay">
+        <h1>{{ recipe.name }}</h1>
+      </div>
+    </div>
+
+    <div class="rb-chips">
+      <span class="rb-chip rb-chip--accent">
+        {{ recipe.ingredients ? recipe.ingredients.length : 0 }} ingredients
+      </span>
+      <span class="rb-chip">Ready to cook</span>
+    </div>
+
+    <p class="rb-subtitle">{{ recipe.description }}</p>
+
+    <div class="rb-row rb-mt-3">
+      <div class="btn-group dropdown" appDropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle">
+          Manage recipe <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="rb-click" (click)="onAddShoppingList()"
+              >Add to shopping list</a
+            >
+          </li>
+          <li>
+            <a class="rb-click" (click)="onEditRecipe()">Edit recipe</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a class="rb-click" (click)="onDeleteRecipe()">Delete recipe</a>
+          </li>
+        </ul>
+      </div>
+      <span class="rb-muted rb-nowrap">What would you like to do?</span>
+    </div>
+
+    <h3 class="rb-mt-3">Ingredients</h3>
+
+    <div *ngIf="recipe.ingredients && recipe.ingredients.length">
+      <div class="rb-row" *ngFor="let ingredient of recipe.ingredients">
+        <span class="rb-row__name">{{ ingredient.name }}</span>
+        <span class="rb-amount">{{ ingredient.amount }}</span>
+      </div>
+    </div>
+
+    <div class="rb-empty" *ngIf="!recipe.ingredients || !recipe.ingredients.length">
+      <span class="rb-empty__icon" aria-hidden="true">&#129380;</span>
+      <p class="rb-empty__title">No ingredients listed</p>
+      <p class="rb-empty__text">
+        Choose <strong>Edit recipe</strong> to add what this dish needs.
+      </p>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">{{ recipe.description }}</div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
-        {{ ingredient.name }} - ${{ ingredient.amount }}
-      </li>
-    </ul>
+
+<ng-template #noRecipe>
+  <div class="rb-card">
+    <div class="rb-empty">
+      <span class="rb-empty__icon" aria-hidden="true">&#127869;</span>
+      <p class="rb-empty__title">Recipe not found</p>
+      <p class="rb-empty__text">Pick another dish from the list.</p>
+    </div>
   </div>
-</div>
+</ng-template>
+
