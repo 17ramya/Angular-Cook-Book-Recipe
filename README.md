@@ -345,3 +345,8 @@ The CLI prints the Hosting URL when it finishes. If `firebase init` guessed a
 different public directory, set `hosting.public` to `dist/first-app` in
 `firebase.json` before deploying.
 
+## Live Demo Link 
+```bash
+https://angular-cook-book-recipe.vercel.app/
+```
+
