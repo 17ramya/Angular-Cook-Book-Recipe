@@ -325,16 +325,6 @@ firebase login
 firebase init hosting
 ```
 
-Answer the prompts like this:
-
-| Prompt | Answer |
-| --- | --- |
-| Project setup | your own Firebase project |
-| Public directory | **`dist/first-app`** — the `outputPath` in `angular.json` |
-| Configure as a single-page app? | **Yes** (rewrites every URL to `/index.html`) |
-| Set up automatic builds with GitHub? | optional |
-| Overwrite `dist/first-app/index.html`? | **No** |
-
 ```bash
 # 4. build the app and deploy it
 npm run build -- --configuration production
