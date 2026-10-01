@@ -345,30 +345,3 @@ The CLI prints the Hosting URL when it finishes. If `firebase init` guessed a
 different public directory, set `hosting.public` to `dist/first-app` in
 `firebase.json` before deploying.
 
-## Roadmap
-
-- [x] Rebuild the UI on top of a global design system
-- [x] Admin / Customer roles with guarded recipe authoring
-- [x] Unit tests for the role model, the role store and the admin guard
-- [x] Rewrite this README for the fork and its commands
-- [ ] Move roles to Firebase **custom claims** (Admin SDK) and enforce them with
-      Realtime Database security rules, so a client cannot grant itself admin
-- [ ] Persist the role server-side so it follows the account across devices
-- [ ] Decide whether the shopping list should also be read-only for customers
-- [ ] Password reset and email verification screens
-- [ ] Offline-first caching of the recipe book with a service worker
-
-## Credits
-
-- Original course project:
-  [`umangutkarsh/recipe-book`](https://github.com/umangutkarsh/recipe-book) —
-  configured as the `upstream` remote of this fork.
-- Redesigned UI, design system and role-based access:
-  [@17ramya](https://github.com/17ramya), in
-  [`17ramya/Angular-Cook-Book-Recipe`](https://github.com/17ramya/Angular-Cook-Book-Recipe).
-- Generated with Angular CLI 14.2 and built on the Firebase REST APIs.
-
-## License
-
-ISC — see the upstream project for the original terms.
-
