@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
+import { DEFAULT_USER_ROLE, UserRole } from './user-role.model';
+import { UserRoleService } from './user-role.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -20,7 +22,11 @@ export class AuthService {
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userRoleService: UserRoleService
+  ) {}
 
   autoLogin() {
     const userData: {
@@ -38,7 +44,8 @@ export class AuthService {
       userData.email,
       userData.id,
       userData._token,
-      new Date(userData._tokenExpirationDate)
+      new Date(userData._tokenExpirationDate),
+      this.userRoleService.getRole(userData.email)
     );
 
     if (loadedUser.token) {
@@ -66,7 +73,7 @@ export class AuthService {
     }, expirationTime);
   }
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string, role: UserRole = DEFAULT_USER_ROLE) {
     return this.http
       .post<AuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
@@ -80,6 +87,9 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap((resData) => {
+          // Remember the chosen role before the session is created so that
+          // handleAuthentication picks it up for the new user.
+          this.userRoleService.setRole(resData.email, role);
           this.handleAuthentication(
             resData.email,
             resData.localId,
@@ -121,7 +131,13 @@ export class AuthService {
     expiresIn: number
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
+    const user = new User(
+      email,
+      userId,
+      token,
+      expirationDate,
+      this.userRoleService.getRole(email)
+    );
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));

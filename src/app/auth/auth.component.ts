@@ -12,6 +12,11 @@ import { AuthResponseData, AuthService } from './auth.service';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { Subscription } from 'rxjs';
+import {
+  DEFAULT_USER_ROLE,
+  USER_ROLE_OPTIONS,
+  UserRole,
+} from './user-role.model';
 
 @Component({
   selector: 'app-auth',
@@ -22,6 +27,10 @@ export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  /** Cards rendered by the sign-up role picker. */
+  roleOptions = USER_ROLE_OPTIONS;
+  /** Role the new account will be created with (least privilege by default). */
+  selectedRole: UserRole = DEFAULT_USER_ROLE;
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost: PlaceholderDirective;
   private closeSub: Subscription;
@@ -41,6 +50,10 @@ export class AuthComponent implements OnDestroy {
     this.error = null;
   }
 
+  onSelectRole(role: UserRole) {
+    this.selectedRole = role;
+  }
+
   onSubmitForm(form: NgForm) {
     if (!form.valid) {
       return;
@@ -56,7 +69,7 @@ export class AuthComponent implements OnDestroy {
     if (this.isLoginMode) {
       authObs = this.authService.login(email, password);
     } else {
-      authObs = this.authService.signup(email, password);
+      authObs = this.authService.signup(email, password, this.selectedRole);
     }
 
     authObs.subscribe(

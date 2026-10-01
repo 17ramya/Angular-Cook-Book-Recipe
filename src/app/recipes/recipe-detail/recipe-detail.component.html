@@ -27,16 +27,21 @@
               >Add to shopping list</a
             >
           </li>
-          <li>
+          <li *ngIf="isAdmin">
             <a class="rb-click" (click)="onEditRecipe()">Edit recipe</a>
           </li>
-          <li class="divider"></li>
-          <li>
+          <li class="divider" *ngIf="isAdmin"></li>
+          <li *ngIf="isAdmin">
             <a class="rb-click" (click)="onDeleteRecipe()">Delete recipe</a>
           </li>
         </ul>
       </div>
-      <span class="rb-muted rb-nowrap">What would you like to do?</span>
+      <span class="rb-muted rb-nowrap" *ngIf="isAdmin"
+        >What would you like to do?</span
+      >
+      <span class="rb-role-chip rb-role-chip--view" *ngIf="!isAdmin"
+        >View only account</span
+      >
     </div>
 
     <h3 class="rb-mt-3">Ingredients</h3>
@@ -51,8 +56,11 @@
     <div class="rb-empty" *ngIf="!recipe.ingredients || !recipe.ingredients.length">
       <span class="rb-empty__icon" aria-hidden="true">&#129380;</span>
       <p class="rb-empty__title">No ingredients listed</p>
-      <p class="rb-empty__text">
+      <p class="rb-empty__text" *ngIf="isAdmin">
         Choose <strong>Edit recipe</strong> to add what this dish needs.
+      </p>
+      <p class="rb-empty__text" *ngIf="!isAdmin">
+        An admin can fill in the ingredient list for this dish.
       </p>
     </div>
   </div>

@@ -12,7 +12,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 6L9 17l-5-5" />
         </svg>
-        Create and edit your own recipes
+        Browse the shared recipe book
       </li>
       <li>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -24,7 +24,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 6L9 17l-5-5" />
         </svg>
-        Sync everything to the cloud
+        Admins add, edit and delete recipes
       </li>
     </ul>
   </aside>
@@ -56,7 +56,7 @@
       {{
         isLoginMode
           ? "Sign in to reach your recipes and shopping list."
-          : "Create an account with your email to get started."
+          : "Create an account, then choose what it is allowed to do."
       }}
     </p>
 
@@ -83,6 +83,57 @@
       *ngIf="!isLoading"
       novalidate
     >
+      <div class="rb-role-picker" *ngIf="!isLoginMode">
+        <p class="rb-role-picker__label" id="rolePickerLabel">Sign up as</p>
+        <div
+          class="rb-role-options"
+          role="radiogroup"
+          aria-labelledby="rolePickerLabel"
+        >
+          <button
+            type="button"
+            class="rb-role-option"
+            *ngFor="let option of roleOptions"
+            role="radio"
+            [class.is-selected]="selectedRole === option.value"
+            [attr.aria-checked]="selectedRole === option.value"
+            (click)="onSelectRole(option.value)"
+          >
+            <span class="rb-role-option__head">
+              <span class="rb-role-option__icon">
+                <svg
+                  *ngIf="option.canManageRecipes"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+                <svg
+                  *ngIf="!option.canManageRecipes"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </span>
+              <span class="rb-role-option__label">{{ option.label }}</span>
+              <span class="rb-role-option__tag">{{ option.tagline }}</span>
+            </span>
+            <span class="rb-role-option__desc">{{ option.description }}</span>
+          </button>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="email">Email address</label>
         <input

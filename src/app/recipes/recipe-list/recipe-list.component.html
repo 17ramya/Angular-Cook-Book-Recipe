@@ -17,9 +17,16 @@
       Recipe list
       <span class="badge">{{ recipes ? recipes.length : 0 }}</span>
     </h2>
-    <button class="btn btn-primary btn-sm" (click)="onNewRecipe()">
+    <button
+      class="btn btn-primary btn-sm"
+      (click)="onNewRecipe()"
+      *ngIf="isAdmin"
+    >
       + New recipe
     </button>
+    <span class="rb-role-chip rb-role-chip--view" *ngIf="!isAdmin">
+      View only
+    </span>
   </div>
 
   <div
@@ -37,8 +44,11 @@
     <div class="rb-empty">
       <span class="rb-empty__icon" aria-hidden="true">&#127869;</span>
       <p class="rb-empty__title">No recipes yet</p>
-      <p class="rb-empty__text">
+      <p class="rb-empty__text" *ngIf="isAdmin">
         Use <strong>New recipe</strong> to add your first dish.
+      </p>
+      <p class="rb-empty__text" *ngIf="!isAdmin">
+        Recipes added by an admin will show up right here.
       </p>
     </div>
   </ng-template>

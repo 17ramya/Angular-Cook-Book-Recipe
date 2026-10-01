@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit, OnDestroy {
   collapsed = true;
   isAuthenticated = false;
+  isAdmin = false;
   userEmail = '';
   private authSub: Subscription;
 
@@ -22,12 +23,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authSub = this.authService.user.subscribe((user) => {
       this.isAuthenticated = !!user;
+      this.isAdmin = user ? user.isAdmin : false;
       this.userEmail = user ? user.email : '';
     });
   }
 
   get userInitial(): string {
     return this.userEmail ? this.userEmail.charAt(0) : '?';
+  }
+
+  get roleLabel(): string {
+    return this.isAdmin ? 'Admin' : 'View only';
   }
 
   onSaveData() {

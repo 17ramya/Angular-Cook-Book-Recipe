@@ -95,6 +95,12 @@
         <li class="rb-user" *ngIf="isAuthenticated">
           <span class="rb-avatar">{{ userInitial }}</span>
           <span class="rb-user__email hidden-xs hidden-sm">{{ userEmail }}</span>
+          <span
+            class="rb-role-chip"
+            [class.rb-role-chip--admin]="isAdmin"
+            [class.rb-role-chip--view]="!isAdmin"
+            >{{ roleLabel }}</span
+          >
         </li>
         <li class="dropdown" appDropdown *ngIf="isAuthenticated">
           <a class="dropdown-toggle rb-click" role="button">
@@ -119,9 +125,10 @@
             Manage <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li>
+            <li *ngIf="isAdmin">
               <a class="rb-click" (click)="onSaveData()">Save to cloud</a>
             </li>
+            <li class="divider" *ngIf="isAdmin"></li>
             <li>
               <a class="rb-click" (click)="onFetchData()">Fetch from cloud</a>
             </li>
